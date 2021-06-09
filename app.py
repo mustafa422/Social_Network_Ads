@@ -1,10 +1,11 @@
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
+import tensorflow as tf
 
 app = Flask(__name__)
 model =  tf.keras.models.load_model('Social_Network_Ads')
-ohe = pickle.load(open('Social_Network_AdsFeatureMod.ft', 'rb'))
+scFeatures = pickle.load(open('Social_Network_AdsFeatureMod.ft', 'rb'))
 
 @app.route('/')
 def home():
@@ -29,11 +30,3 @@ if __name__ == "__main__":
     app.run(debug=True)
 	
 	
-	import warnings
-warnings.filterwarnings("ignore")
-age = float(input("Enter age: "))
-sal = float(input("Enter sal: "))
-feat = np.array([[age,sal]])
-stdFeatures = scFeatures.transform(feat)
-predLabel = model.predict_classes(stdFeatures)
-print("Given Social_Network_Ads is a {} customer".format("Good" if predLabel[0][0] == 1 else "Bad"))
