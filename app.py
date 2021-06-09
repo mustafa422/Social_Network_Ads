@@ -1,0 +1,39 @@
+import numpy as np
+from flask import Flask, request, jsonify, render_template
+import pickle
+
+app = Flask(__name__)
+model =  tf.keras.models.load_model('Social_Network_Ads')
+ohe = pickle.load(open('Social_Network_AdsFeatureMod.ft', 'rb'))
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/predict',methods=['POST'])
+def predict():
+    '''
+    For rendering results on HTML GUI
+    '''
+    	
+	age = float(request.form['age'])
+    sal = float(request.form['sal'])
+    feature = np.array([[age,sal]])
+    stdFeatures = scFeatures.transform(feature)
+    predLabel = model.predict_classes(stdFeatures)
+
+    return render_template('index.html', prediction_text='Given Social_Network_Ads is a {} customer'.format('Good' if predLabel[0][0] == 1 else 'Bad'))
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
+	
+	
+	import warnings
+warnings.filterwarnings("ignore")
+age = float(input("Enter age: "))
+sal = float(input("Enter sal: "))
+feat = np.array([[age,sal]])
+stdFeatures = scFeatures.transform(feat)
+predLabel = model.predict_classes(stdFeatures)
+print("Given Social_Network_Ads is a {} customer".format("Good" if predLabel[0][0] == 1 else "Bad"))
