@@ -17,7 +17,7 @@ def predict():
     For rendering results on HTML GUI
     '''
     	
-	age = float(request.form['age'])
+    age = float(request.form['age'])
     sal = float(request.form['sal'])
     feature = np.array([[age,sal]])
     stdFeatures = scFeatures.transform(feature)
